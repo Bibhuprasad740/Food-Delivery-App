@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app/components/colors.dart';
@@ -13,20 +12,20 @@ import 'package:shopping_app/widgets/icon_text_widget.dart';
 import 'package:shopping_app/widgets/text_widget.dart';
 import 'package:get/get.dart';
 
-
 class DetailFood extends StatelessWidget {
   int pageId;
   String page;
-  DetailFood({Key? key, required this.pageId, required this.page}) : super(key: key);
+  DetailFood({Key? key, required this.pageId, required this.page})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     //print(Get.find<CartController>().getCartsData());
     //we are getting a model here
-    print("hi........."+pageId.toString());
+    print("hi........." + pageId.toString());
     var productItem = Get.find<ProductController>().popularProductList[pageId];
-    Get.find<ProductController>().initData(productItem, pageId, Get.find<CartController>()
-    );
+    Get.find<ProductController>()
+        .initData(productItem, pageId, Get.find<CartController>());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -39,19 +38,16 @@ class DetailFood extends StatelessWidget {
                 height: Dimensions.sliverHeight,
                 width: double.maxFinite,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      AppConstants.UPLOADS_URL+productItem.img
-                    )
-                  )
-                ),
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                            AppConstants.UPLOADS_URL + productItem.img))),
               )),
           Positioned(
-            top: 50,
+              top: 50,
               left: 20,
               right: 20,
-              child:  Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
@@ -63,20 +59,20 @@ class DetailFood extends StatelessWidget {
                       color: Colors.white70,
                     ),
                     child: GestureDetector(
-                      onTap: (){
-                       // Get.toNamed(RouteHelper.getInitialRoute());
+                      onTap: () {
+                        // Get.toNamed(RouteHelper.getInitialRoute());
                         Get.back();
                       },
                       child: Center(
                           child: Icon(
-                            Icons.arrow_back_ios,
-                            size: 16,
-                            color: Colors.black54,
-                          )),
+                        Icons.arrow_back_ios,
+                        size: 16,
+                        color: Colors.black54,
+                      )),
                     ),
                   ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Get.toNamed(RouteHelper.getCartPage(pageId, page));
                     },
                     child: Container(
@@ -87,40 +83,43 @@ class DetailFood extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white70,
                       ),
-                      child: GetBuilder<CartController>(builder:(_){
+                      child: GetBuilder<CartController>(builder: (_) {
                         return Stack(
                           children: [
                             Positioned(
                               child: Center(
                                   child: Icon(
-                                    Icons.shopping_cart_outlined,
-                                    size: 16,
-                                    color: Colors.black54,
-                                  )),
+                                Icons.shopping_cart_outlined,
+                                size: 16,
+                                color: Colors.black54,
+                              )),
                             ),
-                            Get.find<CartController>().totalItems>=1?Positioned(
-                              right: 5,
-                              top:5,
-                              child: Center(
-                                  child: Icon(
-                                    Icons.circle,
-                                    size: 16,
-                                    color: AppColors.mainColor,
-                                  )),
-                            ):Container(),
-                            Get.find<CartController>().totalItems>1?Positioned(
-                              right: 8,
-                              top:6,
-                              child: Center(
-                                  child:  Text(
-                                    Get.find<CartController>().totalItems.toString(),
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        color: Colors.white
-                                    ),
+                            Get.find<CartController>().totalItems >= 1
+                                ? Positioned(
+                                    right: 5,
+                                    top: 5,
+                                    child: Center(
+                                        child: Icon(
+                                      Icons.circle,
+                                      size: 16,
+                                      color: AppColors.mainColor,
+                                    )),
                                   )
-                              ),
-                            ):Container()
+                                : Container(),
+                            Get.find<CartController>().totalItems > 1
+                                ? Positioned(
+                                    right: 8,
+                                    top: 6,
+                                    child: Center(
+                                        child: Text(
+                                      Get.find<CartController>()
+                                          .totalItems
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 10, color: Colors.white),
+                                    )),
+                                  )
+                                : Container()
                           ],
                         );
                       }),
@@ -128,16 +127,15 @@ class DetailFood extends StatelessWidget {
                   )
                 ],
               )),
-
           Positioned(
-            left: 0,
-            right: 0,
-            top: Dimensions.sliverHeight-30,
-           // bottom: 0,
+              left: 0,
+              right: 0,
+              top: Dimensions.sliverHeight - 30,
+              // bottom: 0,
               child: Container(
-                 height: 500,
+                height: 500,
                 //width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(left: 20, right: 20, top:20),
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -158,7 +156,7 @@ class DetailFood extends StatelessWidget {
                         Wrap(
                           children: List.generate(
                               5,
-                                  (index) => Icon(Icons.star,
+                              (index) => Icon(Icons.star,
                                   color: AppColors.mainColor, size: 15)),
                         ),
                         SizedBox(
@@ -210,7 +208,8 @@ class DetailFood extends StatelessWidget {
                     ),
                     Expanded(
                       child: SingleChildScrollView(
-                        child: DescriptionTextWidget(text:productItem.description),
+                        child: DescriptionTextWidget(
+                            text: productItem.description),
                       ),
                     )
                   ],
@@ -218,35 +217,44 @@ class DetailFood extends StatelessWidget {
               ))
         ],
       ),
-
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(
             left: Dimensions.detailFoodImgPad,
             right: Dimensions.detailFoodImgPad),
         height: Dimensions.buttonButtonCon,
-        padding:
-             EdgeInsets.only(top: Dimensions.padding30,
-                 bottom: Dimensions.padding30, left: 20, right: 20),
+        padding: EdgeInsets.only(
+            top: Dimensions.padding30,
+            bottom: Dimensions.padding30,
+            left: 20,
+            right: 20),
         child: Row(
           children: [
             Container(
-              padding:  EdgeInsets.all(Dimensions.padding20),
+              padding: EdgeInsets.all(Dimensions.padding20),
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: (){
-                      Get.find<ProductController>().setQuantity(false, productItem);
+                    onTap: () {
+                      Get.find<ProductController>()
+                          .setQuantity(false, productItem);
                     },
                     child: Icon(Icons.remove, color: AppColors.signColor),
                   ),
                   SizedBox(width: Dimensions.padding10),
-                  GetBuilder<ProductController>(builder: (_){
-                    return BigText(text: Get.find<ProductController>().certainItems.toString(), color: AppColors.mainBlackColor);
-                  },),
+                  GetBuilder<ProductController>(
+                    builder: (_) {
+                      return BigText(
+                          text: Get.find<ProductController>()
+                              .certainItems
+                              .toString(),
+                          color: AppColors.mainBlackColor);
+                    },
+                  ),
                   SizedBox(width: Dimensions.padding10),
                   GestureDetector(
-                    onTap: (){
-                      Get.find<ProductController>().setQuantity(true, productItem);
+                    onTap: () {
+                      Get.find<ProductController>()
+                          .setQuantity(true, productItem);
                     },
                     child: Icon(Icons.add, color: AppColors.signColor),
                   ),
@@ -265,17 +273,19 @@ class DetailFood extends StatelessWidget {
             ),
             Expanded(child: Container()),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Get.find<ProductController>().addItem(productItem);
-
               },
               child: Container(
                 child: BigText(
                   size: 20,
-                  text: "\$"+(productItem.price/100).toString()+ " Add to cart",
+                  text: "₹" +
+                      (productItem.price * AppConstants.priceMultiplier)
+                          .toString() +
+                      " Add to cart",
                   color: Colors.white,
                 ),
-                padding:  EdgeInsets.all(Dimensions.padding20),
+                padding: EdgeInsets.all(Dimensions.padding20),
                 decoration: BoxDecoration(
                     color: AppColors.mainColor,
                     borderRadius: BorderRadius.circular(Dimensions.padding20),

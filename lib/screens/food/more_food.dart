@@ -17,7 +17,8 @@ class MoreFood extends StatelessWidget {
   String page;
   String route;
 
-  MoreFood({Key? key, required this.pageId, required this.page, required this.route})
+  MoreFood(
+      {Key? key, required this.pageId, required this.page, required this.route})
       : super(key: key);
 
   @override
@@ -25,7 +26,7 @@ class MoreFood extends StatelessWidget {
     var productItem = Get.find<PopularProduct>().popularProductList[pageId];
     Get.find<ProductController>()
         .initData(productItem, pageId, Get.find<CartController>());
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: <Widget>[
@@ -33,131 +34,131 @@ class MoreFood extends StatelessWidget {
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(20),
                 child: Container(
-                  padding: const EdgeInsets.only(bottom: 5, top:10),
+                  padding: const EdgeInsets.only(bottom: 5, top: 10),
                   decoration: BoxDecoration(
-                      color:Colors.white,
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
-
-                      )
-                  ),
+                      )),
                   width: double.maxFinite,
-                  child:Center(
+                  child: Center(
                     child: BigText(
-                        text:productItem.title, color:AppColors.mainBlackColor
-                    ),
+                        text: productItem.title,
+                        color: AppColors.mainBlackColor),
                   ),
                 ),
               ),
-            //without this we see an arrow
-            automaticallyImplyLeading: false,
-            backgroundColor: AppColors.yellowColor,
-            //without this the top bar is very thin
+              //without this we see an arrow
+              automaticallyImplyLeading: false,
+              backgroundColor: AppColors.yellowColor,
+              //without this the top bar is very thin
               //it starts from bottom
-            toolbarHeight: 60,
-            floating: false,
+              toolbarHeight: 60,
+              floating: false,
               //stick top
-            pinned: true,
-            expandedHeight: 300,
-
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(
-                AppConstants.UPLOADS_URL + productItem.img,
-                fit: BoxFit.cover,
-                width: double.maxFinite,
-                height: Dimensions.moreViewCon,
-              ),
-              //titlePadding: EdgeInsets.all(16),
-              title: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left:20),
-                    width: 30,
-                    height: 30,
-                    child: GestureDetector(
-                        onTap: (){
-                          //Get.offNamed(RouteHelper.getInitialRoute());
-                          Get.back();
-                        },
-                        child: Center(child: TextWidget(text: "X",color: Colors.black54,))),
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 5,
-                              color: Colors.grey.withOpacity(0.1)
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white
-                    ),
-                  ),
-                  Expanded(child: Container()),
-                  GestureDetector(
-                    onTap: (){
-                      Get.toNamed(RouteHelper.getCartPage(pageId, page));
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 20),
+              pinned: true,
+              expandedHeight: 300,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Image.network(
+                  AppConstants.UPLOADS_URL + productItem.img,
+                  fit: BoxFit.cover,
+                  width: double.maxFinite,
+                  height: Dimensions.moreViewCon,
+                ),
+                //titlePadding: EdgeInsets.all(16),
+                title: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 20),
                       width: 30,
                       height: 30,
+                      child: GestureDetector(
+                          onTap: () {
+                            //Get.offNamed(RouteHelper.getInitialRoute());
+                            Get.back();
+                          },
+                          child: Center(
+                              child: TextWidget(
+                            text: "X",
+                            color: Colors.black54,
+                          ))),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white70,
-                      ),
-                      child: GetBuilder<CartController>(builder:(_){
-                        return Stack(
-                          children: [
-                            Positioned(
-                              child: Center(
-                                  child: Icon(
-                                    Icons.shopping_cart_outlined,
-                                    size: 16,
-                                    color: Colors.black54,
-                                  )),
-                            ),
-                            Get.find<CartController>().totalItems>=1?Positioned(
-                              right: 2,
-                              top:2,
-                              child: Center(
-                                  child: Icon(
-                                    Icons.circle,
-                                    size: 16,
-                                    color: AppColors.mainColor,
-                                  )),
-                            ):Container(),
-                            Get.find<CartController>().totalItems>1?Positioned(
-                              right: 4,
-                              top:3,
-                              child: Center(
-                                  child:  Text(
-                                    Get.find<CartController>().totalItems.toString(),
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                      color: Colors.white
-                                    ),
-                                  )
-                              ),
-                            ):Container()
+                          boxShadow: [
+                            BoxShadow(
+                                offset: Offset(0, 5),
+                                blurRadius: 5,
+                                color: Colors.grey.withOpacity(0.1))
                           ],
-                        );
-                      }),
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white),
                     ),
-                  )
-                ],
-              ),
-          )),
+                    Expanded(child: Container()),
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(RouteHelper.getCartPage(pageId, page));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 20),
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white70,
+                        ),
+                        child: GetBuilder<CartController>(builder: (_) {
+                          return Stack(
+                            children: [
+                              Positioned(
+                                child: Center(
+                                    child: Icon(
+                                  Icons.shopping_cart_outlined,
+                                  size: 16,
+                                  color: Colors.black54,
+                                )),
+                              ),
+                              Get.find<CartController>().totalItems >= 1
+                                  ? Positioned(
+                                      right: 2,
+                                      top: 2,
+                                      child: Center(
+                                          child: Icon(
+                                        Icons.circle,
+                                        size: 16,
+                                        color: AppColors.mainColor,
+                                      )),
+                                    )
+                                  : Container(),
+                              Get.find<CartController>().totalItems > 1
+                                  ? Positioned(
+                                      right: 4,
+                                      top: 3,
+                                      child: Center(
+                                          child: Text(
+                                        Get.find<CartController>()
+                                            .totalItems
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 10, color: Colors.white),
+                                      )),
+                                    )
+                                  : Container()
+                            ],
+                          );
+                        }),
+                      ),
+                    )
+                  ],
+                ),
+              )),
           SliverToBoxAdapter(
-
             child: Column(
               children: [
                 //SizedBox(height: 10,),
                 Container(
-
-                  margin: const EdgeInsets.only(left: 20, right: 20),
-                  child:  DescriptionTextWidget(text: productItem.description)
-                ),
+                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    child:
+                        DescriptionTextWidget(text: productItem.description)),
               ],
             ),
           ),
@@ -177,12 +178,10 @@ class MoreFood extends StatelessWidget {
                 child: Container(
                   width: 40,
                   height: 40,
-
                   child: Center(
                     child: Icon(Icons.remove, color: Colors.white),
                   ),
                   decoration: BoxDecoration(
-
                       boxShadow: [
                         BoxShadow(
                             offset: Offset(0, 5),
@@ -196,7 +195,7 @@ class MoreFood extends StatelessWidget {
               SizedBox(width: 40),
               GetBuilder<ProductController>(builder: (_) {
                 return BigText(
-                  text: "\$12.88 " +
+                  text: "₹180 " +
                       " X " +
                       Get.find<ProductController>().certainItems.toString(),
                   color: AppColors.mainBlackColor,
@@ -267,7 +266,7 @@ class MoreFood extends StatelessWidget {
                         Get.find<ProductController>().addItem(productItem);
                       },
                       child: BigText(
-                        text: "\$ 28 | Add to cart",
+                        text: "₹ 180 | Add to cart",
                         color: Colors.white,
                       ),
                     ),

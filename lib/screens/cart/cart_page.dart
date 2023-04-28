@@ -15,6 +15,7 @@ import 'package:shopping_app/data/repos/order_controller.dart';
 import 'package:shopping_app/models/cart_item.dart';
 import 'package:shopping_app/models/place_order.dart';
 import 'package:shopping_app/routes/route_helper.dart';
+import 'package:shopping_app/screens/checkout/order_successful_page.dart';
 import 'package:shopping_app/uitls/app_constants.dart';
 import 'package:shopping_app/uitls/app_dimensions.dart';
 import 'package:shopping_app/widgets/big_text.dart';
@@ -306,11 +307,13 @@ class CartPage extends StatelessWidget {
                                                     Row(
                                                       children: [
                                                         BigText(
-                                                            text: "\$ " +
-                                                                cartController
-                                                                    .getCarts[
-                                                                        index]
-                                                                    .price
+                                                            text: "₹ " +
+                                                                (cartController
+                                                                            .getCarts[
+                                                                                index]
+                                                                            .price *
+                                                                        AppConstants
+                                                                            .priceMultiplier)
                                                                     .toString(),
                                                             color: Colors
                                                                 .redAccent),
@@ -474,8 +477,11 @@ class CartPage extends StatelessWidget {
                                         width: Dimensions.width10,
                                       ),
                                       BigText(
-                                        text: '\$ ' +
-                                            controller.totalAmount.toString(),
+                                        text: '₹ ' +
+                                            (controller.totalAmount *
+                                                    AppConstants
+                                                        .priceMultiplier)
+                                                .toString(),
                                         color: AppColors.mainColor,
                                       )
                                     ],
@@ -635,24 +641,26 @@ class CartPage extends StatelessWidget {
   }
 
   void _callback(bool isSuccess, String message, String orderID) async {
-    if (isSuccess) {
-      Get.find<CartController>().clearCartList();
-      Get.find<OrderController>().stopLoader();
-      if (Get.find<OrderController>().paymentMethodIndex == 1) {
-        Get.offNamed(RouteHelper.getPaymentRoute(
-            orderID, Get.find<UserController>().userInfoModel!.id!));
-      } else {
-        if (GetPlatform.isWeb) {
-          Get.back();
-        } else {
-          print("working fine");
-          Get.offNamed(RouteHelper.getPaymentRoute(
-              orderID, Get.find<UserController>().userInfoModel!.id!));
-        }
-      }
+    // if (isSuccess) {
+    Get.find<CartController>().clearCartList();
+    Get.find<OrderController>().stopLoader();
+    if (Get.find<OrderController>().paymentMethodIndex == 1) {
+      Get.offNamed(RouteHelper.getPaymentRoute(
+          orderID, Get.find<UserController>().userInfoModel!.id!));
     } else {
-      print(message);
-      showCustomSnackBar(message);
+      Get.to(() => OrderSuccessfulScreen(orderID: orderID, status: 1));
+      // if (GetPlatform.isWeb) {
+      //   Get.back();
+      // } else {
+      //   print("working fine");
+      //   Get.offNamed(RouteHelper.getPaymentRoute(
+      //       orderID, Get.find<UserController>().userInfoModel!.id!));
+      // }
     }
+    // }
+    // else {
+    //   print(message);
+    //   showCustomSnackBar(message);
+    // }
   }
 }

@@ -47,4 +47,6 @@ class AppConstants {
       '/api/v1/config/place-api-autocomplete';
   static const String CONFIG_URI = '/api/v1/config';
   static const String CART_LIST = 'cart_list';
+
+  static int priceMultiplier = 15;
 }
